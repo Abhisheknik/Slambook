@@ -4,55 +4,59 @@ import os
 
 app = Flask(__name__)
 
-# Define where to store the form data (in the volume)
-DATA_FILE = '/data/form_data.json'  # This is where the volume will store the data
+# Define the directory and file paths
+DATA_DIR = '/data'
+DATA_FILE = os.path.join(DATA_DIR, 'form_data.json')
 
-# Ensure data file exists
+# Ensure the directory and file exist
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
 if not os.path.exists(DATA_FILE):
     with open(DATA_FILE, 'w') as f:
         json.dump([], f)
 
 @app.route('/')
 def index():
-    # Render the form template (now with slambook-style fields)
+    """Render the form template."""
     return render_template('form.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    # Retrieve form data from the submitted form
-    name = request.form.get('name')
-    date = request.form.get('date')
-    hobbies = request.form.get('hobbies')
-    slimbook = request.form.get('slimbook')
-    dream_destination = request.form.get('dream_destination')
-    life_motto = request.form.get('life_motto')
-    funny_memory = request.form.get('funny_memory')
+    """Handle form submission."""
+    try:
+        # Retrieve form data from the submitted form
+        form_data = {
+            'name': request.form.get('name'),
+            'date': request.form.get('date'),
+            'hobbies': request.form.get('hobbies'),
+            'slimbook': request.form.get('slimbook'),
+            'dream_destination': request.form.get('dream_destination'),
+            'life_motto': request.form.get('life_motto'),
+            'funny_memory': request.form.get('funny_memory')
+        }
 
-    # Create a dictionary to store the form data
-    form_data = {
-        'name': name,
-        'date': date,
-        'hobbies': hobbies,
-        'slimbook': slimbook,
-        'dream_destination': dream_destination,  # New field
-        'life_motto': life_motto,        # New field
-        'funny_memory': funny_memory       # New field
-    }
+        # Validate that required fields are not empty
+        if not form_data['name'] or not form_data['date']:
+            return jsonify({"error": "Name and Date are required fields!"}), 400
 
-    # Load existing data from the JSON file
-    with open(DATA_FILE, 'r') as f:
-        data = json.load(f)
+        # Load existing data from the JSON file
+        with open(DATA_FILE, 'r') as f:
+            data = json.load(f)
 
-    # Append the new form data
-    data.append(form_data)
+        # Append the new form data
+        data.append(form_data)
 
-    # Save the updated data back to the JSON file
-    with open(DATA_FILE, 'w') as f:
-        json.dump(data, f, indent=4)
+        # Save the updated data back to the JSON file
+        with open(DATA_FILE, 'w') as f:
+            json.dump(data, f, indent=4)
 
-    # Respond with a success message
-    return jsonify({"message": "Data saved successfully!"})
+        # Respond with a success message
+        return jsonify({"message": "Data saved successfully!"})
+
+    except Exception as e:
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 if __name__ == '__main__':
     # Run the Flask application on all interfaces
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=5000)

@@ -6,7 +6,11 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - /var/data:/data  # Mount a directory in the container to a path on Render's disk
+      - form_data:/data
     environment:
       - FLASK_APP=app/app.py
       - FLASK_ENV=development
+
+volumes:
+  form_data:
+    driver: local
