@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Slambook - Share Your Info</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: #ffdee9;
+            background-image: 
+                linear-gradient(45deg, #fff1f1 25%, transparent 25%),
+                linear-gradient(-45deg, #fff1f1 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #fff1f1 75%),
+                linear-gradient(-45deg, transparent 75%, #fff1f1 75%);
+            background-size: 20px 20px;
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background: #fff;
+            max-width: 800px;
+            width: 95%;
+            padding: 2rem;
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
+            box-shadow: 8px 8px 0 #ff6b6b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                #ff6b6b,
+                #ff6b6b 10px,
+                #fff 10px,
+                #fff 20px
+            );
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            color: #ff6b6b;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 0 #ffd3d3;
+        }
+
+        .intro-text {
+            font-size: 1.5rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #fff5f5;
+            border-radius: 8px;
+            border: 2px dashed #ff6b6b;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            background: #fff5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #ffd3d3;
+        }
+
+        label {
+            display: block;
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1.2rem;
+            font-family: 'VT323', monospace;
+            border: 2px solid #ffd3d3;
+            border-radius: 4px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        button {
+            font-family: 'Press Start 2P', cursive;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 #ff4f4f;
+        }
+
+        button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #ff4f4f;
+        }
+
+        .info-text {
+            font-size: 1.2rem;
+            color: #888;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .intro-text {
+                font-size: 1.2rem;
+            }
+
+            .form-group {
+                padding: 0.8rem;
+            }
+
+            label {
+                font-size: 1.2rem;
+            }
+
+            input, select {
+                padding: 0.6rem;
+                font-size: 1.1rem;
+            }
+
+            button {
+                padding: 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Retro Slambook</h1>
+        <div class="intro-text">
+            Share your awesome memories with us! ★彡
+        </div>
+
+        <form action="/submit" method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">✧ What's your name?</label>
+                    <input type="text" id="name" name="name" required placeholder="Type your name here...">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">✧ When's your birthday?</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="hobbies">✧ What are your hobbies?</label>
+                    <input type="text" id="hobbies" name="hobbies" required placeholder="Gaming? Reading? Dancing?">
+                </div>
+
+                <div class="form-group">
+                    <label for="slambook">✧ Do you own a Slambook?</label>
+                    <select id="slambook" name="slambook" required>
+                        <option value="" disabled selected>Choose one...</option>
+                        <option value="yes">Totally do!</option>
+                        <option value="no">Not yet!</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="favorite-color">✧ Favorite color?</label>
+                    <input type="text" id="favorite-color" name="favorite-color" required placeholder="What color makes you happy?">
+                </div>
+
+                <div class="form-group">
+                    <label for="dream_destination">✧ Dream destination?</label>
+                    <input type="text" id="dream_destination" name="dream_destination" required placeholder="Where do you want to go?">
+                </div>
+
+                <div class="form-group">
+                    <label for="life_motto">✧ Your life motto?</label>
+                    <input type="text" id="life_motto" name="life_motto" placeholder="Words you live by...">
+                </div>
+
+                <div class="form-group">
+                    <label for="funny_memory">✧ Share a funny memory!</label>
+                    <input type="text" id="funny_memory" name="funny_memory" placeholder="Tell us something funny...">
+                </div>
+            </div>
+
+            <button type="submit">⭐ SAVE MY MEMORIES ⭐</button>
+        </form>
+
+        <div class="info-text">
+            ♥ Thanks for sharing your awesome memories with us! ♥
+            @Created By Abhishek Nikam
+        </div>
+    </div>
+</body>
+</html>
