@@ -10,3 +10,6 @@ SlamBook is a web application built using **Python**, **HTML**, and **CSS** to c
 - **Scalability**: Deployed on Azure App Service for high availability.
 
 ---
+
+## **Live Demo**
+  https://slambook.azurewebsites.net/
